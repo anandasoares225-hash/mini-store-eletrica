@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mini Store Elétrica</title>
+<style>
+*{box-sizing:border-box;font-family:Arial;margin:0}
+body{background:#FFF9C4;padding-bottom:100px}
+.topo{background:#FFD600;padding:18px;border-bottom:3px solid #000}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:12px}
+.cards div{background:#FFD600;border:2px solid #000;border-radius:14px;padding:12px;text-align:center;font-weight:900}
+.item{background:#fff;border:2px solid #000;border-radius:12px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.badge{padding:6px 12px;border-radius:20px;font-size:11px;font-weight:900;border:2px solid #000}
+.v{background:#A7F3D0}.a{background:#FDE68A}.l{background:#FF9F7A}
+.btn{width:100%;padding:14px;background:#FFD600;border:2px solid #000;border-radius:12px;font-weight:900;margin-top:10px}
+input{width:100%;padding:12px;border:2px solid #000;border-radius:10px;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="topo"><h1>⚡ Mini Store - 10 + extras</h1><small>Toque no selo pra mudar status</small></div>
+<div class="cards"><div><b id="d">0</b><br><small>Disponível</small></div><div><b id="e">0</b><br><small>Em uso</small></div><div><b id="p">0</b><br><small>Pendente</small></div></div>
+<div style="padding:12px"><input id="nome" placeholder="Nome: Ex: Sensor 10A"><button class="btn" onclick="add()">+ SALVAR MATERIAL</button></div>
+<div id="lista" style="padding:12px"></div>
+<script>
+let itens=[["EL-001","Fusível NH 10A","disponivel"],["EL-002","Disjuntor DR 63A","em uso"],["EL-003","Botoeira Verde","disponivel"],["EL-004","Botoeira Vermelha","em uso"],["EL-005","Sensor Indutivo","disponivel"],["EL-006","Relé 24V","pendente"],["EL-007","Contator 25A","em uso"],["EL-008","Fusível Vidro 5A","disponivel"],["EL-009","Lâmpada Sinalizadora","disponivel"],["EL-010","Bornes Passagem","disponivel"]];
+function render(){let h="",d=0,e=0,p=0;itens.forEach((it,i)=>{if(it[2]=="disponivel")d++;else if(it[2]=="em uso")e++;else p++;let cor=it[2]=="disponivel"?"v":it[2]=="em uso"?"a":"l";h+=`<div class="item"><div><b>${it[1]}</b><br><small>${it[0]}</small></div><span class="badge ${cor}" onclick="mudar(${i})">${it[2].toUpperCase()}</span></div>`});document.getElementById("lista").innerHTML=h;document.getElementById("d").innerText=d;document.getElementById("e").innerText=e;document.getElementById("p").innerText=p}
+function mudar(i){let o=["disponivel","em uso","pendente"];itens[i][2]=o[(o.indexOf(itens[i][2])+1)%3];render()}
+function add(){let n=document.getElementById("nome").value;if(!n)return alert("Digite o nome");itens.unshift(["EL-0"+(itens.length+1),n,"disponivel"]);render();document.getElementById("nome").value=""}
+render();
+</script>
+</body>
+</html>
